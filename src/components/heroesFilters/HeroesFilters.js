@@ -1,20 +1,14 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getFilters, changeFilter } from "./filterSlice";
-import { filterHeroes } from "../heroesList/heroesSlice";
 
 const HeroesFilters = () => {
-    const {heroes} = useSelector(state => state.heroes)
     const {filters, currentFilter} = useSelector(state => state.filter)
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(getFilters())
     }, [dispatch])
-
-    useEffect(() => {
-        dispatch(filterHeroes(currentFilter))
-    }, [currentFilter, heroes, dispatch])
 
     const onChangeFilter = (name) => {
         dispatch(changeFilter(name))

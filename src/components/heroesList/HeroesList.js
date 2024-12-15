@@ -1,15 +1,16 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getHeroes, deleteHero } from './heroesSlice';
+import { getHeroes, deleteHero, filteredHeroesSelector } from './heroesSlice';
 import { useHttp } from '../../hooks/http.hook';
 import HeroesListItem from "../heroesListItem/HeroesListItem";
 import Spinner from '../spinner/Spinner';
 
 const HeroesList = () => {
-    const {heroesLoadingStatus, filteredHeroes} = useSelector(state => state.heroes);
+    const {heroesLoadingStatus, heroes} = useSelector(state => state.heroes);
     const dispatch = useDispatch();
     const {request} = useHttp()
 
+    const filteredHeroes = useSelector(filteredHeroesSelector)
 
     useEffect(() => {
         dispatch(getHeroes())
@@ -36,7 +37,6 @@ const HeroesList = () => {
         })
     }
 
-    console.log(filteredHeroes)
     const elements = renderHeroesList(filteredHeroes);
     return (
         <ul>
